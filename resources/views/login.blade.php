@@ -110,7 +110,6 @@
 </head>
 
 <body>
-
     <div class="container">
         <div class="logo">🌍</div>
         <h1>Welcome Back</h1>
@@ -118,7 +117,7 @@
 
         <button onclick="loginWithGoogle()">Sign in with Google</button>
 
-        <div class="loading">
+        <div class="loading" id="loading">
             <div class="spinner"></div>
             <p style="margin-top:10px">جاري تسجيل الدخول...</p>
         </div>
@@ -126,85 +125,81 @@
         <div class="message" id="message"></div>
     </div>
 
-
     <script>
-        /* ===============================
-               1️⃣ تسجيل الدخول بجوجل
-            ================================ */
-        function loginWithGoogle() {
-            const clientId = "291192722002-m1ujvc40djk83nqimo29vmaqfn86h8ll.apps.googleusercontent.com";
-            const redirectUri = "https://gooutegypt.mo-sayed.site";
+        const clientId = "291192722002-m1ujvc40djk83nqimo29vmaqfn86h8ll.apps.googleusercontent.com";
+        const redirectUri = "https://gooutegypt.mo-sayed.site/home";
 
-            const googleAuthUrl =
-                "https://accounts.google.com/o/oauth2/v2/auth" +
-                "?client_id=" + clientId +
-                "&redirect_uri=" + redirectUri +
-                "&response_type=token" +
-                "&scope=email profile openid";
+function loginWithGoogle() {
+    const googleAuthUrl =
+        "https://accounts.google.com/o/oauth2/v2/auth" +
+        "?client_id=" + clientId +
+        "&redirect_uri=" + redirectUri +
+        "&response_type=token" +
+        "&scope=email profile openid";
 
-            window.location.href = googleAuthUrl;
-        }
+    window.location.href = googleAuthUrl;
+}
 
-        /* ===============================
-           2️⃣ تنفيذ الكود بعد الرجوع من Google
-        ================================ */
-        console.log("✅ JS Loaded");
-        console.log("URL:", window.location.href);
-        console.log("HASH:", window.location.hash);
 
-        // استخراج access_token من الـ hash
+        // ===============================
+        // After redirect from Google
+        // ===============================
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
         const accessToken = params.get("access_token");
 
-        console.log("ACCESS TOKEN:", accessToken);
-
-        // لو فيه توكن ابعته للباك إند
         if (accessToken) {
             sendTokenToBackend(accessToken);
         }
 
-        /* ===============================
-           3️⃣ إرسال التوكن للباك إند
-           (form-data زي Postman)
-        ================================ */
         async function sendTokenToBackend(token) {
-            console.log("🚀 Sending token to backend...");
-
+            // Show loading spinner
+            document.getElementById("loading").style.display = "block";
             const formData = new FormData();
             formData.append("access_token", token);
 
             try {
                 const response = await fetch(
-                    "https://gooutegypt.mo-sayed.site/api/auth/google-login", {
-                        method: "POST",
-                        body: formData
-                    }
+                    "https://gooutegypt.mo-sayed.site/api/auth/google-login",
+                    { method: "POST", body: formData }
                 );
 
-                console.log("STATUS:", response.status);
-
                 const data = await response.json();
-                console.log("RESPONSE:", data);
+
+                document.getElementById("loading").style.display = "none";
 
                 if (response.ok && data.status) {
-                    // مسح التوكن من الـ URL (اختياري وأفضل)
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                    // تحويل لصفحة الهوم بعد ثانية
-                    setTimeout(() => {
-                        window.location.href = "{{ route('home') }}";
-                    }, 1000);
-                    localStorage.setItem("auth_token", data.token);
-                } else {
-                    alert("❌ فشل تسجيل الدخول");
-                }
+                    // Clear the hash
+                    window.history.replaceState({}, document.title, "/");
 
+                    // Save token locally
+                    localStorage.setItem("auth_token", data.token);
+
+                    // Show success message
+                    const messageDiv = document.getElementById("message");
+                    messageDiv.className = "message success";
+                    messageDiv.innerText = "✅ تم تسجيل الدخول بنجاح! جاري التحويل...";
+                    messageDiv.style.display = "block";
+
+                    // Redirect to home
+                    setTimeout(() => {
+                        window.location.href = "https://gooutegypt.mo-sayed.site/home";
+                    }, 1500);
+
+                } else {
+                    const messageDiv = document.getElementById("message");
+                    messageDiv.className = "message error";
+                    messageDiv.innerText = "❌ فشل تسجيل الدخول";
+                    messageDiv.style.display = "block";
+                }
             } catch (error) {
-                console.error("🔥 ERROR:", error);
-                alert("❌ خطأ في الاتصال بالسيرفر");
+                console.error(error);
+                const messageDiv = document.getElementById("message");
+                messageDiv.className = "message error";
+                messageDiv.innerText = "❌ خطأ في الاتصال بالسيرفر";
+                messageDiv.style.display = "block";
             }
         }
     </script>
 </body>
-
 </html>
