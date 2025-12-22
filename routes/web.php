@@ -7,9 +7,9 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function () {
-    return view('welcome');
+    return view('login');
 });
 
-Route::get('/login', function () {
-    return view('welcome');
+Route::get('/home', function () {
+    return view('home');
 });
