@@ -129,8 +129,8 @@
 
     <script>
         /* ===============================
-           1️⃣ تسجيل الدخول بجوجل
-        ================================ */
+               1️⃣ تسجيل الدخول بجوجل
+            ================================ */
         function loginWithGoogle() {
             const clientId = "291192722002-m1ujvc40djk83nqimo29vmaqfn86h8ll.apps.googleusercontent.com";
             const redirectUri = "https://gooutegypt.mo-sayed.site";
@@ -176,8 +176,7 @@
 
             try {
                 const response = await fetch(
-                    "https://gooutegypt.mo-sayed.site/api/auth/google-login",
-                    {
+                    "https://gooutegypt.mo-sayed.site/api/auth/google-login", {
                         method: "POST",
                         body: formData
                     }
@@ -189,7 +188,12 @@
                 console.log("RESPONSE:", data);
 
                 if (response.ok && data.status) {
-                    alert("✅ تم تسجيل الدخول بنجاح");
+                    // مسح التوكن من الـ URL (اختياري وأفضل)
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    // تحويل لصفحة الهوم بعد ثانية
+                    setTimeout(() => {
+                        window.location.href = "{{ route('home') }}";
+                    }, 1000);
                     localStorage.setItem("auth_token", data.token);
                 } else {
                     alert("❌ فشل تسجيل الدخول");
@@ -202,4 +206,5 @@
         }
     </script>
 </body>
+
 </html>

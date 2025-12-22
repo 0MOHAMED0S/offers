@@ -337,7 +337,7 @@
         <div class="nav-links">
             <a href="#features">المميزات</a>
             <a href="#about">عن التطبيق</a>
-            <a href="login.html" class="login-btn">تسجيل الدخول</a>
+            <a href="{{ route('login') }}" class="login-btn">تسجيل الدخول</a>
         </div>
     </nav>
 
@@ -347,7 +347,7 @@
             <h1>اكتشف مصر معانا 🇪🇬</h1>
             <p>أفضل الأماكن والمطاعم والكافيهات في مصر كلها</p>
             <div class="cta-buttons">
-                <a href="login.html" class="cta-btn cta-primary">ابدأ الآن</a>
+                <a href="{{ route('login') }}" class="cta-btn cta-primary">ابدأ الآن</a>
                 <a href="#features" class="cta-btn cta-secondary">اعرف أكتر</a>
             </div>
         </div>
