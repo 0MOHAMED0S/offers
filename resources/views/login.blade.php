@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Login</title>
+    <title>Google Login / Home</title>
 
     <style>
         * {
@@ -115,7 +115,7 @@
         <h1>Welcome Back</h1>
         <p>Sign in with Google</p>
 
-        <button onclick="loginWithGoogle()">Sign in with Google</button>
+        <button id="google-login-btn">Sign in with Google</button>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
@@ -129,17 +129,17 @@
         const clientId = "291192722002-m1ujvc40djk83nqimo29vmaqfn86h8ll.apps.googleusercontent.com";
         const redirectUri = "https://gooutegypt.mo-sayed.site/home";
 
-function loginWithGoogle() {
-    const googleAuthUrl =
-        "https://accounts.google.com/o/oauth2/v2/auth" +
-        "?client_id=" + clientId +
-        "&redirect_uri=" + redirectUri +
-        "&response_type=token" +
-        "&scope=email profile openid";
+        // Google login button
+        document.getElementById("google-login-btn").addEventListener("click", () => {
+            const googleAuthUrl =
+                "https://accounts.google.com/o/oauth2/v2/auth" +
+                "?client_id=" + clientId +
+                "&redirect_uri=" + redirectUri +
+                "&response_type=token" +
+                "&scope=email profile openid";
 
-    window.location.href = googleAuthUrl;
-}
-
+            window.location.href = googleAuthUrl;
+        });
 
         // ===============================
         // After redirect from Google
@@ -165,29 +165,26 @@ function loginWithGoogle() {
                 );
 
                 const data = await response.json();
-
                 document.getElementById("loading").style.display = "none";
 
+                const messageDiv = document.getElementById("message");
+
                 if (response.ok && data.status) {
-                    // Clear the hash
-                    window.history.replaceState({}, document.title, "/");
+                    // Clear the hash from URL
+                    window.history.replaceState({}, document.title, "/home");
 
                     // Save token locally
                     localStorage.setItem("auth_token", data.token);
 
                     // Show success message
-                    const messageDiv = document.getElementById("message");
                     messageDiv.className = "message success";
                     messageDiv.innerText = "✅ تم تسجيل الدخول بنجاح! جاري التحويل...";
                     messageDiv.style.display = "block";
 
-                    // Redirect to home
-                    setTimeout(() => {
-                        window.location.href = "https://gooutegypt.mo-sayed.site/home";
-                    }, 1500);
+                    // Redirect to another page if needed after short delay
+                    // window.location.href = "/dashboard"; // Optional
 
                 } else {
-                    const messageDiv = document.getElementById("message");
                     messageDiv.className = "message error";
                     messageDiv.innerText = "❌ فشل تسجيل الدخول";
                     messageDiv.style.display = "block";
