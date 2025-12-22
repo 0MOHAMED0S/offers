@@ -178,6 +178,7 @@
 
                     // Show success message
                     messageDiv.className = "message success";
+                     localStorage.setItem("auth_token", data.token);
                     messageDiv.innerText = "✅ تم تسجيل الدخول بنجاح! جاري التحويل...";
                     messageDiv.style.display = "block";
 
