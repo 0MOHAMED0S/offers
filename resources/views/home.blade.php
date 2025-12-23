@@ -308,9 +308,9 @@
     <script>
         // Check if user is authenticated
         function checkAuth() {
-            const authToken = sessionStorage.getItem('authToken');
+            const auth_token = sessionStorage.getItem('auth_token');
 
-            if (!authToken) {
+            if (!auth_token) {
                 // Redirect to login if not authenticated
                 window.location.href = '/login.html';
                 return;
@@ -323,7 +323,7 @@
         async function loadUserInfo() {
             try {
                 // Get token from session storage
-                const authToken = sessionStorage.getItem('authToken');
+                const auth_token = sessionStorage.getItem('auth_token');
 
                 // If you have user data stored, load it
                 const userData = sessionStorage.getItem('userData');
@@ -365,7 +365,7 @@
 
         function logout() {
             // Clear session storage
-            sessionStorage.removeItem('authToken');
+            sessionStorage.removeItem('auth_token');
             sessionStorage.removeItem('userData');
 
             // Redirect to login page
