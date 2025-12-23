@@ -47,7 +47,7 @@
 
     <script>
         const clientId = "291192722002-m1ujvc40djk83nqimo29vmaqfn86h8ll.apps.googleusercontent.com";
-        const redirectUri = "https://gooutegypt.mo-sayed.site/home.html";
+    const redirectUri = "https://gooutegypt.mo-sayed.site/home";
 
         // Google login button
         document.getElementById("google-login-btn").addEventListener("click", () => {
