@@ -8,14 +8,14 @@
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-            background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; }
+            background:linear-gradient(135deg,#667eea,#764ba2); min-height:100vh; }
         .navbar { background:white; padding:20px 40px; box-shadow:0 2px 10px rgba(0,0,0,0.1);
             display:flex; justify-content:space-between; align-items:center; }
         .logo { display:flex; align-items:center; gap:10px; font-size:24px; font-weight:bold; color:#667eea; }
-        .logo-icon { width:40px; height:40px; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+        .logo-icon { width:40px; height:40px; background:linear-gradient(135deg,#667eea,#764ba2 100%);
             border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; }
         .user-info { display:flex; align-items:center; gap:15px; }
-        .user-avatar { width:45px; height:45px; border-radius:50%; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+        .user-avatar { width:45px; height:45px; border-radius:50%; background:linear-gradient(135deg,#667eea,#764ba2);
             display:flex; align-items:center; justify-content:center; color:white; font-size:20px; font-weight:bold; }
         .user-avatar img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
         .user-details { text-align:right; }
