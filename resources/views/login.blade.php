@@ -96,7 +96,7 @@
                     messageDiv.style.display = "block";
 
                     // Redirect to home after short delay
-                    setTimeout(() => { window.location.href = '/home.html'; }, 1000);
+                    setTimeout(() => { window.location.href = '{{ route("home") }}'; }, 1000);
                 } else {
                     messageDiv.className = "message error";
                     messageDiv.innerText = "❌ فشل تسجيل الدخول";
