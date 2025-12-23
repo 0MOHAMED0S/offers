@@ -98,6 +98,52 @@
     </div>
 
     <script>
+        // في بداية سكريبت صفحة Home
+window.addEventListener('load', async () => {
+    // التحقق هل الرابط يحتوي على Access Token قادم من جوجل؟
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get("access_token");
+
+    if (accessToken) {
+        // إذا وجدنا توكن، نقوم بتسجيل الدخول فوراً
+        await handleGoogleCallback(accessToken);
+    } else {
+        // إذا لم نجد، نقوم بالفحص العادي
+        checkAuth();
+    }
+});
+
+async function handleGoogleCallback(token) {
+    try {
+        const formData = new FormData();
+        formData.append("access_token", token);
+
+        // استبدل الرابط برابط الـ API الخاص بك
+        const response = await fetch("https://gooutegypt.mo-sayed.site/api/auth/google-login", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status) {
+            localStorage.setItem("auth_token", data.token);
+            localStorage.setItem("userData", JSON.stringify(data.user));
+
+            // تنظيف الرابط من التوكن ليكون شكله نظيفاً
+            window.history.replaceState({}, document.title, window.location.pathname);
+
+            // تحديث بيانات المستخدم في الصفحة
+            loadUserInfo();
+        } else {
+            // فشل التوكن، ارجع لصفحة اللوجن
+             window.location.href = '{{ route("login") }}';
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
 function checkAuth() {
     const auth_token = localStorage.getItem('auth_token');
     if (!auth_token) {
