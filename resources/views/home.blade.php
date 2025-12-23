@@ -98,14 +98,17 @@
     </div>
 
     <script>
-        function checkAuth() {
-            const auth_token = localStorage.getItem('auth_token');
-            if (!auth_token) {
-                window.location.href = '{{ route("login") }}';
-                return;
-            }
-            loadUserInfo();
-        }
+function checkAuth() {
+    const auth_token = localStorage.getItem('auth_token');
+    if (!auth_token) {
+        window.location.href = '/login.html';
+        return;
+    }
+    loadUserInfo();
+}
+
+
+
 
         function loadUserInfo() {
             try {
@@ -134,11 +137,7 @@
             }
         }
 
-        function logout() {
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('userData');
-            window.location.href = '{{ route("login") }}';
-        }
+
 
         window.addEventListener('load', checkAuth);
     </script>
