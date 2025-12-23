@@ -158,6 +158,7 @@
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            text-align: center;
         }
 
         .stat-card:hover {
@@ -220,13 +221,8 @@
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
@@ -259,9 +255,7 @@
             <span>GoOut Egypt</span>
         </div>
         <div class="user-info">
-            <div class="user-avatar" id="userAvatar">
-                👤
-            </div>
+            <div class="user-avatar" id="userAvatar">👤</div>
             <div class="user-details">
                 <div class="user-name" id="userName">جاري التحميل...</div>
                 <div class="user-email" id="userEmail"></div>
@@ -291,7 +285,6 @@
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon">📍</div>
                 <div class="stat-icon">👥</div>
                 <div class="stat-title">المستخدمين النشطين</div>
                 <div class="stat-value">856</div>
@@ -306,33 +299,23 @@
     </div>
 
     <script>
-        // Check if user is authenticated
+        // Check authentication on page load
         function checkAuth() {
-            const auth_token = sessionStorage.getItem('auth_token');
-
+            const auth_token = localStorage.getItem('auth_token');
             if (!auth_token) {
-                // Redirect to login if not authenticated
                 window.location.href = '/login.html';
                 return;
             }
-
-            // Load user info
             loadUserInfo();
         }
 
-        async function loadUserInfo() {
+        function loadUserInfo() {
             try {
-                // Get token from session storage
-                const auth_token = sessionStorage.getItem('auth_token');
-
-                // If you have user data stored, load it
-                const userData = sessionStorage.getItem('userData');
-
+                const userData = localStorage.getItem('userData');
                 if (userData) {
                     const user = JSON.parse(userData);
                     displayUserInfo(user);
                 } else {
-                    // Default display if no user data
                     document.getElementById('userName').textContent = 'مستخدم GoOut';
                     document.getElementById('userEmail').textContent = 'user@goout.com';
                 }
@@ -343,36 +326,22 @@
         }
 
         function displayUserInfo(user) {
-            // Display user name
-            if (user.name) {
-                document.getElementById('userName').textContent = user.name;
-            }
-
-            // Display user email
-            if (user.email) {
-                document.getElementById('userEmail').textContent = user.email;
-            }
-
-            // Display user avatar
+            if (user.name) document.getElementById('userName').textContent = user.name;
+            if (user.email) document.getElementById('userEmail').textContent = user.email;
             if (user.picture) {
-                document.getElementById('userAvatar').innerHTML = `<img src="${user.picture}" alt="User Avatar">`;
+                document.getElementById('userAvatar').innerHTML = `<img src="${user.picture}" alt="Avatar">`;
             } else if (user.name) {
-                // Use first letter of name as avatar
                 const firstLetter = user.name.charAt(0).toUpperCase();
                 document.getElementById('userAvatar').textContent = firstLetter;
             }
         }
 
         function logout() {
-            // Clear session storage
-            sessionStorage.removeItem('auth_token');
-            sessionStorage.removeItem('userData');
-
-            // Redirect to login page
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('userData');
             window.location.href = '/login.html';
         }
 
-        // Check authentication on page load
         window.addEventListener('load', checkAuth);
     </script>
 </body>
