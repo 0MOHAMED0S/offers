@@ -46,12 +46,8 @@
     </div>
 
     <script>
-       // في كود Javascript الخاص بصفحة تسجيل الدخول
-const clientId = "291192722002-m1ujvc40djk83nqimo29vmaqfn86h8ll.apps.googleusercontent.com";
-
-// التعديل هنا: اجعل الرابط يشير إلى صفحة اللوجن (login) وليس الرئيسية (home)
-// تأكد أن هذا الرابط مطابق تماماً للرابط الذي يفتح صفحة تسجيل الدخول عندك
-const redirectUri = "https://gooutegypt.mo-sayed.site/login";
+        const clientId = "291192722002-m1ujvc40djk83nqimo29vmaqfn86h8ll.apps.googleusercontent.com";
+    const redirectUri = "https://gooutegypt.mo-sayed.site/login";
 
         // Google login button
         document.getElementById("google-login-btn").addEventListener("click", () => {
