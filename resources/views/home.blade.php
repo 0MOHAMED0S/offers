@@ -98,7 +98,7 @@
     </div>
 
     <script>
-        // في بداية سكريبت صفحة Home
+                // في بداية سكريبت صفحة Home
 window.addEventListener('load', async () => {
     // التحقق هل الرابط يحتوي على Access Token قادم من جوجل؟
     const hash = window.location.hash.substring(1);
@@ -144,17 +144,14 @@ async function handleGoogleCallback(token) {
         console.error(error);
     }
 }
-function checkAuth() {
-    const auth_token = localStorage.getItem('auth_token');
-    if (!auth_token) {
-        window.location.href = '/login.html';
-        return;
-    }
-    loadUserInfo();
-}
-
-
-
+        function checkAuth() {
+            const auth_token = localStorage.getItem('auth_token');
+            if (!auth_token) {
+                window.location.href = '{{ route("login") }}';
+                return;
+            }
+            loadUserInfo();
+        }
 
         function loadUserInfo() {
             try {
@@ -183,7 +180,11 @@ function checkAuth() {
             }
         }
 
-
+        function logout() {
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('userData');
+            window.location.href = '{{ route("login") }}';
+        }
 
         window.addEventListener('load', checkAuth);
     </script>
