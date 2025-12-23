@@ -88,7 +88,7 @@
                     localStorage.setItem("userData", JSON.stringify(data.user));
 
                     // Clear hash
-                    window.history.replaceState({}, document.title, "/home.html");
+                    window.history.replaceState({}, document.title, "{{route('home')}}");
 
                     // Success message
                     messageDiv.className = "message success";
